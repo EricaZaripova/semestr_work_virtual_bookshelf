@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %}Логин{% endblock %}
+
+{% block content %}
+
+{% for category, message in get_flashed_messages(with_categories=True) %}
+  <div class="alert alert-{{ category.lower() }}">{{ message }}</div>
+{% endfor %}
+
+<form action="{{ url_for('.login')}}" method="post">
+    {{ wtf.quick_form(form) }}
+</form>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+
+{% block title %}Редактировать книгу{% endblock %}
+
+{% block content %}
+    <div class="container">
+    {% for category, message in get_flashed_messages(with_categories=True) %}
+      <div class="alert alert-{{ category.lower() }}">{{ message }}</div>
+    {% endfor %}
+    <br>
+    <h3 style="text-align: center; background: #bccecf">Редактировать книгу «{{ book.name }}»</h3>
+    <form action="{{ url_for('.edit_a_book', type_of_list=type_of_list, book_id=book.id)}}" method="post">
+        <div class="form-group">
+            {{ wtf.quick_form(form) }}
+        </div>
+    </form>
+    </div>
+{% endblock %}

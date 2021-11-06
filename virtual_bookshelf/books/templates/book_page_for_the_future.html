@@ -1,0 +1,10 @@
+{% extends 'book_page_base.html' %}
+
+{% block buttons %}
+<form action='{{ url_for('.move_book', type_of_list_old=type_of_list, type_of_list_new='already_read', book_id=book.id) }}' style="display: inline-block">
+    <button type="submit" class="btn btn-outline-info">Отметить прочитанной</button>
+</form>
+<form action='{{ url_for('.move_book', type_of_list_old=type_of_list, type_of_list_new='in_the_process', book_id=book.id) }}' style="display: inline-block">
+    <button type="submit" class="btn btn-outline-info">Начать читать</button>
+</form>
+{% endblock %}

@@ -1,0 +1,18 @@
+/*.form-contact .invalid {*/
+/*    background: #FF9898;*/
+/*}*/
+/*.form-contact .invalid-feedback {*/
+/*    background: #CC0000;*/
+/*}*/
+
+.profile-ava {
+	width: 320px;
+	text-align: center;
+	overflow: hidden;
+	background: #bccecf;
+	padding: 10px;
+	border: #000000;
+	border-radius: 10px;
+}
+.profile-ava img {max-width: 300px; height: auto;}
+

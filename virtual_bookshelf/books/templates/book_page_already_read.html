@@ -1,0 +1,77 @@
+{% extends 'book_page_base.html' %}
+
+{% block table %}
+    <tr>
+      <th scope="row" style="background-color: #e3f2fd;">Начало чтения</th>
+      <td>{{ book.beginning_at }}</td>
+    </tr>
+    <tr>
+      <th scope="row" style="background-color: #e3f2fd;">Конец чтения</th>
+      <td>{{ book.ending_at }}</td>
+    </tr>
+    <tr>
+      <th scope="row" style="background-color: #e3f2fd;">Мнение</th>
+      <td>{{ book.opinion_about }}</td>
+    </tr>
+{% endblock %}
+
+{% block ajax %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+    <script>
+    function send_ajax(type_of_list, book_id) {
+        $.ajax({
+            type: "POST",
+            url: '/ajax',
+            data: {type_of_list: 'already_read', book_id: {{ book.id }}},
+            success: function (data) {
+                $('#answer').replaceWith(data)
+            }
+        })
+    }
+    </script>
+
+    <form action="/ajax" method="post" name="form" style="display: inline-block">
+        <input type="button" class="btn btn-outline-info" onclick="send_ajax()" value="Количество дней, затраченных на прочтение">
+    </form>
+    <div id="answer" style="display: inline-block;"> </div>
+{% endblock %}
+
+{% block quotes %}
+    <table class="table table-sm table-bordered">
+      <thead>
+        <tr class="table">
+            <th scope="col" style="text-align: center; background: #bccecf">Цитата</th>
+            <th scope="col" style="width: 150px; text-align: center; background: #bccecf">Автор цитаты</th>
+            <th scope="col" style="width: 200px; text-align: center; background: #bccecf">Место<br>(глава/часть и т.д.)</th>
+            <th scope="col" style="background: #bccecf"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+            {% for quote in quotes %}
+                <tr>
+                <td>{{ quote.text }}</td>
+                <td style="text-align: center;">{{ quote.speaker }}</td>
+                <td style="text-align: center;">{{ quote.place }}</td>
+                <td><a href="{{ url_for('.delete_quote', type_of_list=type_of_list, book_id=book.id, quote_id=quote.id) }}">Удалить</a></td>
+                </tr>
+            {% endfor %}
+        </tr>
+      </tbody>
+    </table>
+
+    <form action='{{ url_for('.add_quote', type_of_list=type_of_list, book_id=book.id) }}'>
+        <button type="submit" class="btn btn-outline-secondary">Добавить цитату</button>
+    </form>
+    <br>
+{% endblock %}
+
+{% block buttons %}
+<form action='{{ url_for('.move_book', type_of_list_old=type_of_list, type_of_list_new='in_the_process', book_id=book.id) }}' style="display: inline-block">
+    <button type="submit" class="btn btn-outline-info">Перечитать</button>
+</form>
+<form action='{{ url_for('.move_book', type_of_list_old=type_of_list, type_of_list_new='for_the_future', book_id=book.id) }}' style="display: inline-block">
+    <button type="submit" class="btn btn-outline-info">Вернуть на полку</button>
+</form>
+{% endblock %}

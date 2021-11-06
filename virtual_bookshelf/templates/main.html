@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+    <div>
+        {% for category, message in get_flashed_messages(with_categories=True) %}
+          <div class="alert alert-{{ category.lower() }}">{{ message }}</div>
+        {% endfor %}
+
+        <h2>Главная страница</h2>
+    </div>
+{% endblock %}

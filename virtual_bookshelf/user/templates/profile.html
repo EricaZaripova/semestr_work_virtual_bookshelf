@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %}Редактировать профиль{% endblock %}
+
+{% block content %}
+    <br>
+    {% for category, message in get_flashed_messages(with_categories=True) %}
+        <div class="alert alert-{{ category.lower() }}">{{ message }}</div>
+    {% endfor %}
+
+    <h2 style="text-align: center; background: #bccecf">Изменить профиль {{ current_user.username }}</h2>
+
+    <form action="{{ url_for('.profile')}}" method="post" enctype="multipart/form-data">
+        {{ wtf.quick_form(form) }}
+    </form>
+{% endblock %}

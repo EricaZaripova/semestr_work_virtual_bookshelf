@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %}Добавить книгу{% endblock %}
+
+{% block content %}
+    <br>
+    <h2 style="text-align: center; background: #bccecf">Добавить книгу</h2>
+    <div class="container" style="text-align: center;">
+        <br>
+        {% for category, message in get_flashed_messages(with_categories=True) %}
+          <div class="alert alert-{{ category.lower() }}">{{ message }}</div>
+        {% endfor %}
+
+        <form action='{{ url_for('.add_book', type_of_list='already_read') }}' style="display: inline-block">
+            <button type="submit" class="btn btn-outline-secondary" style="width: 200px;">Прочитано</button>
+        </form>
+        <form action='{{ url_for('.add_book', type_of_list='in_the_process') }}' style="display: inline-block">
+            <button type="submit" class="btn btn-outline-secondary" style="width: 200px;">В процессе</button>
+        </form>
+        <form action='{{ url_for('.add_book', type_of_list='for_the_future') }}' style="display: inline-block">
+            <button type="submit" class="btn btn-outline-secondary" style="width: 200px;">На будущее</button>
+        </form>
+    </div>
+    {% if form %}
+        <form action="{{ url_for('.add_book', type_of_list=type_of_list)}}" method="post">
+            <div class="form-group">
+                {{ wtf.quick_form(form) }}
+            </div>
+        </form>
+    {% endif %}
+{% endblock %}

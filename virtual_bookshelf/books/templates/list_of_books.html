@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Список книг{% endblock %}
+
+{% block content %}
+        {% for category, message in get_flashed_messages(with_categories=True) %}
+            <br>
+          <div class="alert alert-{{ category.lower() }}">{{ message }}</div>
+        {% endfor %}
+
+    <br>
+    <table class="table table-sm table-light">
+      <thead>
+        <tr>
+            {% for col in columns %}
+              <th scope="col" style="text-align: center; background: #bccecf">{{ col }}</th>
+            {% endfor %}
+            <th scope="col" style="text-align: center; background: #bccecf"></th>
+            <th scope="col" style="text-align: center; background: #bccecf"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+            {% for book in books %}
+                <tr>
+                <th scope="row">{{ book.name }}</th>
+                <td>{{ book.author }}</td>
+                <td>{{ book.link }}</td>
+                {% if type_of_list in ['already_read', 'in_the_process'] %}
+                    <td>{{ book.beginning_at }}</td>
+                    {% if type_of_list == 'already_read' %}
+                        <td>{{ book.ending_at }}</td>
+                        <td>{{ book.opinion_about }}</td>
+                    {% endif %}
+                {% endif %}
+                <td><a href="{{ url_for('.book_page', type_of_list=type_of_list, book_id=book.id) }}">Посмотреть</a></td>
+                <td><a href="{{ url_for('.delete_book', type_of_list=type_of_list, book_id=book.id) }}">Удалить книгу</a></td>
+                </tr>
+            {% endfor %}
+        </tr>
+      </tbody>
+    </table>
+    <form action='{{ url_for('.add_book', type_of_list=type_of_list) }}'>
+        <button type="submit" class="btn btn-outline-secondary">Добавить книгу</button>
+    </form>
+{% endblock %}

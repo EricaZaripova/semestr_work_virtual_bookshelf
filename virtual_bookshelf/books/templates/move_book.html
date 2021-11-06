@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %}Переместить книгу{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% for category, message in get_flashed_messages(with_categories=True) %}
+          <div class="alert alert-{{ category.lower() }}">{{ message }}</div>
+        {% endfor %}
+    <br>
+    <h3 style="text-align: center; background: #bccecf">Переместить книгу «{{ book.name }}»</h3>
+    {% if form %}
+        <form action="{{ url_for('.move_book', type_of_list_old=type_of_list_old, type_of_list_new=type_of_list_new, book_id=book.id)}}" method="post">
+            <div class="form-group">
+                {{ wtf.quick_form(form) }}
+            </div>
+        </form>
+    {% endif %}
+    </div>
+{% endblock %}

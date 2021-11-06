@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %}Добавить цитату{% endblock %}
+
+{% block content %}
+
+{% for category, message in get_flashed_messages(with_categories=True) %}
+  <div class="alert alert-{{ category.lower() }}">{{ message }}</div>
+{% endfor %}
+<hr>
+    <h3 style="text-align: center; background: #bccecf">Добавить цитату к книге «{{ book.name }}»</h3>
+    <form action="{{ url_for('.add_quote', type_of_list=type_of_list, book_id=book_id)}}" method="post" enctype="multipart/form-data">
+    {{ wtf.quick_form(form) }}
+    </form>
+{% endblock %}

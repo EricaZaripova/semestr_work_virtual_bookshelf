@@ -1,0 +1,16 @@
+{% extends 'book_page_base.html' %}
+
+{% block table %}
+      <th scope="row" style="background-color: #e3f2fd;">Начало чтения</th>
+      <td>{{ book.beginning_at }}</td>
+    </tr>
+{% endblock %}
+
+{% block buttons %}
+<form action='{{ url_for('.move_book', type_of_list_old=type_of_list, type_of_list_new='already_read', book_id=book.id) }}' style="display: inline-block">
+    <button type="submit" class="btn btn-outline-info">Отметить прочитанной</button>
+</form>
+<form action='{{ url_for('.move_book', type_of_list_old=type_of_list, type_of_list_new='for_the_future', book_id=book.id) }}' style="display: inline-block">
+    <button type="submit" class="btn btn-outline-info">Вернуть на полку</button>
+</form>
+{% endblock %}
